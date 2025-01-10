@@ -3,10 +3,22 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <!-- Page -->
     <div class="flex items-center justify-center grow bg-center bg-no-repeat page-bg">
         <div class="card max-w-[370px] w-full">
-            <form action="#" class="card-body flex flex-col gap-5 p-10" id="sign_up_form" method="post">
+           {% if errors is defined %}
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <!-- formulaire d'inscription -->
+            <form action="{{ path('auth.register') }}" class="card-body flex flex-col gap-5 p-10" id="sign_up_form" method="post">
+                {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.userIdentifier }}, 
+                    </div>
+                {% endif %}
                 <div class="text-center mb-2.5">
                     <h3 class="text-lg font-medium text-gray-900 leading-none mb-2.5">
                         Inscription
@@ -23,12 +35,12 @@
 
                 <div class="flex flex-col gap-1">
                     <label class="form-label text-gray-900">Email</label>
-                    <input class="input" name="user_email" placeholder="Adresse email" type="text" value=""/>
+                    <input class="input" name="email" placeholder="Adresse email" type="email" value=""/>
                 </div>
                 <div class="flex flex-col gap-1">
                     <label class="form-label font-normal text-gray-900">Mot de passe</label>
                     <div class="input" data-toggle-password="true">
-                        <input name="user_password" placeholder="Mot de passe" type="password" value="">
+                        <input name="password" placeholder="Mot de passe" type="password" value="">
                         <button class="btn btn-icon" data-toggle-password-trigger="true" type="button">
                             <i class="ki-filled ki-eye text-gray-500 toggle-password-active:hidden">
                             </i>
@@ -58,9 +70,8 @@
                         J'accepte les <a class="text-2sm link" href="#">GCU</a>
                     </span>
                 </label>
-                <button class="btn btn-primary flex justify-center grow">Inscription</button>
+                <button class="btn btn-primary flex justify-center grow" type="submit">Inscription</button>
             </form>
         </div>
     </div>
-    <!-- End of Page -->
 {% endblock %}
